@@ -41,12 +41,12 @@ export default function AdminPage() {
   }, []);
 
   function startTimer(petId: number, initialSeconds: number) {
-    // 清除已有的定时器
+    // Clear existing timer
     if (timers[petId]) {
       clearInterval(timers[petId]);
     }
 
-    // 设置新的定时器
+    // Set new timer
     const timerId = setInterval(() => {
       setPendingPets((prevPets) =>
         prevPets.map((pet) => {
@@ -63,7 +63,7 @@ export default function AdminPage() {
       );
     }, 1000);
 
-    // 保存定时器ID
+    // Save timer ID
     setTimers((prev) => ({ ...prev, [petId]: timerId }));
   }
 
@@ -173,7 +173,7 @@ export default function AdminPage() {
         console.error(`❌ transaction failed, transaction url: ${txUrl}`);
       }
     } catch (error: any) {
-      // 深度解析错误
+      // Detailed error parsing
       console.error("transaction error:", JSON.stringify(error, null, 2));
     }
     return "";
@@ -289,7 +289,7 @@ export default function AdminPage() {
     setProcessingPetId(petId);
     try {
       await handleSendTx(petId);
-      // 清除该宠物的定时器
+      // Clear the timer for this pet
       if (timers[petId]) {
         clearInterval(timers[petId]);
         const newTimers = { ...timers };

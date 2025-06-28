@@ -151,7 +151,7 @@ export default function UserPage() {
           logs.forEach((log: any) => {
             console.log(log);
             if (log.args.tokenId === BigInt(pet.id)) {
-              console.log("NFT 铸造成功！tokenId:" + log.args.tokenId);
+              console.log("NFT minted successfully! tokenId:" + log.args.tokenId);
               unwatch();
               updatePetNFT(pet.id);
             }

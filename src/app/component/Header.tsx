@@ -18,12 +18,12 @@ export default function Header() {
       <div className="flex items-center gap-4">
         <ConnectButton />
         {isConnected && (
-          <button onClick={() => router.push("/user")} className="p-2 rounded-full hover:bg-gray-100 transition-colors" title="用户中心">
+          <button onClick={() => router.push("/user")} className="p-2 rounded-full hover:bg-gray-100 transition-colors" title="User Center">
             <UserOutlined className="text-gray-600 text-xl" />
           </button>
         )}
         {isConnected && address === OWNER && (
-          <button onClick={() => router.push("/admin")} className="p-2 rounded-full hover:bg-gray-100 transition-colors" title="用户中心">
+          <button onClick={() => router.push("/admin")} className="p-2 rounded-full hover:bg-gray-100 transition-colors" title="Admin Center">
             <DashboardOutlined className="text-gray-600 text-xl" />
           </button>
         )}
