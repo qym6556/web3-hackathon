@@ -74,7 +74,6 @@ export default function UserPage() {
       },
     });
     const data = await res.json();
-    console.log(data);
     for (const pet of data) {
       if (pet.status === PetStatus.Adopted && pet.owner === address) {
         adoptedPets.push(pet);

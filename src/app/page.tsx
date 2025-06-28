@@ -12,7 +12,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   async function initPetsList() {
     try {
-      setLoading(true); // 开始加载
+      setLoading(true);
       const res = await fetch("/api", {
         method: "GET",
         headers: {
@@ -25,7 +25,7 @@ export default function Home() {
     } catch (error) {
       console.error("initAdoptableList error:", error);
     } finally {
-      setLoading(false); // 加载完成
+      setLoading(false);
     }
   }
   function filterPetList(data: Pet[]) {

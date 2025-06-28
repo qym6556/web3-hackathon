@@ -175,6 +175,7 @@ export default function AdminPage() {
     } catch (error: any) {
       // Detailed error parsing
       console.error("transaction error:", JSON.stringify(error, null, 2));
+      setProcessingPetId(null);
     }
     return "";
   }
@@ -197,6 +198,7 @@ export default function AdminPage() {
         onLogs: (logs: any) => {
           logs.forEach((log: any) => {
             console.log("get confirmWinner event:", log.args.winner);
+            setProcessingPetId(null);
             updateOwner(petId, log.args.winner);
           });
           unwatch();
@@ -229,6 +231,7 @@ export default function AdminPage() {
         return "";
       }
     } catch (error: any) {
+      setProcessingPetId(null);
       console.error("watch event error:", JSON.stringify(error, null, 2));
     }
   }
@@ -247,6 +250,8 @@ export default function AdminPage() {
         message: "update owner success",
         type: "success",
       });
+      // delete pendingPets
+      setPendingPets((prev) => prev.filter((pet) => pet.id !== petId));
       return data;
     }
     return "";
@@ -298,7 +303,6 @@ export default function AdminPage() {
       }
     } catch (error) {
       console.error("handle approve error:", error);
-    } finally {
       setProcessingPetId(null);
     }
   }
