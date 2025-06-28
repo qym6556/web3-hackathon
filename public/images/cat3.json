@@ -1,0 +1,20 @@
+{
+    "name": "cat3",
+    "description": "A cat.",
+    "image":"https://fancy-pink-amphibian.myfilebase.com/ipfs/QmQozsQWupgjk4m2P8V5GRM4GVGHCyYSNcCZSrsB3HwkwG",
+    "attributes": [
+        {
+            "trait_type": "breed",
+            "value": "Ragdoll"
+        },
+        {
+            "trait_type": "color",
+            "value": "white and orange"
+        },
+        {
+            "trait_type": "gender",
+            "value": "male"
+        }
+    ],
+    "external_url": "https://openseacreatures.io/3"
+}

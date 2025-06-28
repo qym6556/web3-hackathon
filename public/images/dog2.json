@@ -1,0 +1,20 @@
+{
+    "name": "dog2",
+    "description": "A whitedog.",
+    "image":"https://fancy-pink-amphibian.myfilebase.com/ipfs/QmTzrsSgeWVNtV9DrT9VjGwJUkogxMze8Vq2VTKkFNf3y5",
+    "attributes": [
+        {
+            "trait_type": "breed",
+            "value": "Shiba Inu"
+        },
+        {
+            "trait_type": "color",
+            "value": "white"
+        },
+        {
+            "trait_type": "gender",
+            "value": "male"
+        }
+    ],
+    "external_url": "https://openseacreatures.io/3"
+}

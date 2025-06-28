@@ -1,0 +1,20 @@
+{
+    "name": "pet1",
+    "description": "A Red-eared slider.",
+    "image":"https://fancy-pink-amphibian.myfilebase.com/ipfs/QmXHqvFiFV33XrhCYS27hV3yVgro7MNnxebb2QtzvPviHh",
+    "attributes": [
+        {
+            "trait_type": "breed",
+            "value": "Unknown"
+        },
+        {
+            "trait_type": "color",
+            "value": "green"
+        },
+        {
+            "trait_type": "gender",
+            "value": "male"
+        }
+    ],
+    "external_url": "https://openseacreatures.io/3"
+}

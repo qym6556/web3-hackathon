@@ -1,0 +1,20 @@
+{
+    "name": "cat1",
+    "description": "This is a white cat.",
+    "image":"https://fancy-pink-amphibian.myfilebase.com/ipfs/QmehaSC2qETciYzmyeoKi3FZVv1SUvfAWWGKpXGJEgAqaY",
+    "attributes": [
+        {
+            "trait_type": "breed",
+            "value": "Persian"
+        },
+        {
+            "trait_type": "color",
+            "value": "white"
+        },
+        {
+            "trait_type": "gender",
+            "value": "male"
+        }
+    ],
+    "external_url": "https://openseacreatures.io/3"
+}

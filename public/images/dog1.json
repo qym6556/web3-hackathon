@@ -1,0 +1,20 @@
+{
+    "name": "dog1",
+    "description": "A black dog.",
+    "image":"https://fancy-pink-amphibian.myfilebase.com/ipfs/QmTpz11s69VRkdRqZps1C2oWwFE6htQD4Nu6U6hXXuJhwu",
+    "attributes": [
+        {
+            "trait_type": "breed",
+            "value": "German Shepard"
+        },
+        {
+            "trait_type": "color",
+            "value": "black"
+        },
+        {
+            "trait_type": "gender",
+            "value": "male"
+        }
+    ],
+    "external_url": "https://openseacreatures.io/3"
+}

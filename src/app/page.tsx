@@ -1,101 +1,104 @@
-import Image from "next/image";
+"use client";
+import PetCard from "./component/PetCard";
+import { useEffect, useState } from "react";
+import { Pet, PetStatus } from "@app/util";
+import Header from "./component/Header";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const [initialized, setInitialized] = useState(false);
+  const [adoptableList, setAdoptableList] = useState<Pet[]>([]);
+  const [adoptedList, setAdoptedList] = useState<Pet[]>([]);
+  const [pendingList, setPendingList] = useState<Pet[]>([]);
+  const [loading, setLoading] = useState(false);
+  async function initPetsList() {
+    try {
+      setLoading(true); // 开始加载
+      const res = await fetch("/api", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      filterPetList(data);
+      setInitialized(true);
+    } catch (error) {
+      console.error("initAdoptableList error:", error);
+    } finally {
+      setLoading(false); // 加载完成
+    }
+  }
+  function filterPetList(data: Pet[]) {
+    const adoptableList: Pet[] = [];
+    const adoptedList: Pet[] = [];
+    const pendingList: Pet[] = [];
+    data.forEach((pet) => {
+      if (pet.status === PetStatus.Adopted) {
+        adoptedList.push(pet);
+      } else if (pet.status === PetStatus.Pending) {
+        pendingList.push(pet);
+      } else {
+        adoptableList.push(pet);
+      }
+    });
+    setAdoptableList(adoptableList);
+    setAdoptedList(adoptedList);
+    setPendingList(pendingList);
+  }
+  useEffect(() => {
+    if (!initialized) {
+      initPetsList();
+    }
+  }, []);
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-purple-100 to-white">
+        <header className="flex justify-between items-center p-6 bg-white shadow-md">{/* ... existing header ... */}</header>
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-500"></div>
         </div>
+      </div>
+    );
+  }
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-purple-100 to-white">
+      <Header />
+      <main className="container mx-auto px-4 py-8">
+        <section className="mb-8 p-6 bg-white rounded-lg shadow-md" id="pet-adoption-pending-area">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">Adoptable Pets</h2>
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {adoptableList.map((pet) => (
+              <li key={pet.id}>
+                <PetCard pet={pet} />
+              </li>
+            ))}
+          </ul>
+        </section>
+        {pendingList.length > 0 && (
+          <section className="mb-8 p-6 bg-white rounded-lg shadow-md" id="pet-adoption-pending-area">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Pending Adoption</h2>
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {pendingList.map((pet) => (
+                <li key={pet.id}>
+                  <PetCard pet={pet} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {adoptedList.length > 0 && (
+          <section className="mb-8 p-6 bg-white rounded-lg shadow-md" id="pet-adoption-pending-area">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Adopted Pets</h2>
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {adoptedList.map((pet) => (
+                <li key={pet.id}>
+                  <PetCard pet={pet} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
